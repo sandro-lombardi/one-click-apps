@@ -1,3 +1,5 @@
+
+
 captainVersion: 4
 services:
     $$cap_appname:
@@ -6,10 +8,13 @@ services:
         volumes:
             - $$cap_appname-data:/var/lib/tiddlywiki
         environment:
-            TW_VERSOPM: $$cap_wikiversion
             TW_USERNAME: $$cap_wikusername
             TW_PASSWORD: $$cap_wikipassword
             NODE_MEM: $$cap_nodemem
+        build:
+            context: https://gitlab.com/nicolaw/tiddlywiki.git
+            args:
+                TW_VERSION: $$cap_wikiversion
         caproverExtra:
             containerHttpPort: '8080'
 caproverOneClickApp:
