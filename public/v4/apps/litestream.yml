@@ -5,11 +5,12 @@ services:
             dockerfileLines:
                 - FROM litestream/litestream:$$cap_version
                 - CMD replicate $$cap_db_path $$cap_bucket_url
+            notExposeAsWebApp: 'true'
         volumes:
             - $$cap_appname-data:/data
         environment:
-            - LITESTREAM_ACCESS_KEY_ID=$$cap_access_key_id
-            - LITESTREAM_SECRET_ACCESS_KEY=$$cap_secret_access_key
+            - LITESTREAM_ACCESS_KEY_ID: $$cap_access_key_id
+            - LITESTREAM_SECRET_ACCESS_KEY: $$cap_secret_access_key
 caproverOneClickApp:
     variables:
         - id: '$$cap_version'
