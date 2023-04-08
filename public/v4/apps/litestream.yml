@@ -6,7 +6,7 @@ services:
                 - FROM litestream/litestream:$$cap_version
                 - RUN mkdir /config
                 - |-
-                  RUN test -f /config/litestream.yml || echo -e "dbs:\n  - path: $$cap_db_path\n    replicas:\n      - type: s3\n        bucket: $$cap_bucket\n        path: $$cap_dest_path\n        endpoint: $$cap_endpoint_url\n        access-key-id: $$cap_access_key_id\n        secret-access-key: $$cap_secret_access_key" > /config/litestream.yml
+                    RUN test -f /config/litestream.yml || echo -e "dbs:\n  - path: $$cap_db_path\n    replicas:\n      - type: s3\n        bucket: $$cap_bucket\n        path: $$cap_dest_path\n        endpoint: $$cap_endpoint_url\n        access-key-id: $$cap_access_key_id\n        secret-access-key: $$cap_secret_access_key" > /config/litestream.yml
                 - ENTRYPOINT ["/usr/local/bin/litestream"]
                 - CMD ["replicate", "-config", "/config/litestream.yml"]
             notExposeAsWebApp: 'true'
@@ -54,9 +54,9 @@ caproverOneClickApp:
             To use this app, you need to enter your S3 credentials (Access Key ID and Secret Access Key).
         end: |-
             Your litestream service has been deployed successfully!
-            
+
             Important! Read this and take a screenshot so you can refer to it!
-            
+
             By default, $$cap_appname-data volume, which is an empty directory, is mapped to your litestream data folder which is at /data inside the app. To change this:
             Go to CapRover > Apps > Litestream > App Config tab and change $$cap_appname-data to
             a) some other volume name such as "cap_appname-myappvolume" if you want litestream to access a sqlite database in this volume
