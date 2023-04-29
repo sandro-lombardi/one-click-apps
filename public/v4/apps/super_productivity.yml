@@ -1,0 +1,20 @@
+captainVersion: 4
+services:
+    $$cap_appname:
+        image: johannesjo/super-productivity:$$cap_version
+caproverOneClickApp:
+    variables:
+        - id: '$$cap_version'
+          label: Super Productivity Version
+          defaultValue: 'v7.11.5'
+          description: Check out their Docker page for the valid tags https://hub.docker.com/r/johannesjo/super-productivity/tags
+          validRegex: "/^([^\\s^\\/])+$/"
+    instructions:
+        start: |-
+            This one-click app will deploy the super productivity web service.
+        end: |-
+            Your super productivity web service has been deployed successfully!
+    displayName: Super Productivity
+    isOfficial: true
+    description: Super Productivity is an advanced todo list app with integrated Timeboxing and time tracking capabilities. It also comes with integrations for Jira, Gitlab, GitHub and Open Project.
+    documentation: https://github.com/johannesjo/super-productivity
