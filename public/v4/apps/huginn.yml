@@ -56,8 +56,8 @@ caproverOneClickApp:
           validRegex: /^([^\s^\/])+$/
     instructions:
         start: 'Create agents that monitor and act on your behalf. Your agents are standing by!'
-        end: Huggin has been successfully deployed!
-    displayName: Huggin
+        end: Huginn has been successfully deployed!
+    displayName: Huginn
     isOfficial: true
     description: Description needed.
     documentation: See https://github.com/huginn/huginn
