@@ -55,7 +55,7 @@ caproverOneClickApp:
           description: 'Check out their Docker page for the valid tags: https://hub.docker.com/r/huginn/huginn-single-process/tags.'
           validRegex: /^([^\s^\/])+$/
     instructions:
-        start: Description needed
+        start: 'Create agents that monitor and act on your behalf. Your agents are standing by!'
         end: Huggin has been successfully deployed!
     displayName: Huggin
     isOfficial: true
