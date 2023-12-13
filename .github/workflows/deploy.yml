@@ -2,7 +2,7 @@ name: Publish One Click Apps
 
 on:
   push:
-    branches: [master]
+    branches: [sandrlom_personal_one_click_apps]
 
 jobs:
   build:
