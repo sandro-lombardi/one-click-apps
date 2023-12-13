@@ -53,12 +53,12 @@ caproverOneClickApp:
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_version-web
           label: The Huginn-single-process docker image version for the web service.
-          defaultValue: ''
+          defaultValue: 'ac59e7ad8135cdfc962a8a5ec7cef137469a31ed'
           description: Check out their Docker page for the valid tags.
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_version-threaded
           label: The Huginn-single-process docker image version for the threaded service.
-          defaultValue: ''
+          defaultValue: 'ac59e7ad8135cdfc962a8a5ec7cef137469a31ed'
           description: Check out their Docker page for the valid tags.
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_postgres_port_5432_tcp_addr
@@ -94,5 +94,5 @@ caproverOneClickApp:
         end: Huginn has been successfully deployed!
     displayName: Huginn
     isOfficial: true
-    description: Description needed.
+    description: 'Create agents that monitor and act on your behalf. Your agents are standing by!'
     documentation: See https://github.com/huginn/huginn
