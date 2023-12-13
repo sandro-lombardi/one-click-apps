@@ -1,23 +1,30 @@
 captainVersion: 4
 services:
-    $$cap_appname-postgresdata:
-        image: postgres:$$cap_version-postgresdata
-        command: /bin/true
     $$cap_appname-postgres:
         image: postgres:$$cap_version-postgres
         restart: always
-        env_file:
-            - ../postgres.env
-        volumes_from:
-            - postgresdata
+        environment:
+        POSTGRES_PORT_5432_TCP_ADDR: $$cap_postgres_port_5432_tcp_addr
+        POSTGRES_PASSWORD: $$cap_postgres_password
+        POSTGRES_USER: $$cap_postgres_user
+        HUGINN_DATABASE_PASSWORD: $$cap_huginn_database_password
+        HUGINN_DATABASE_USERNAME: $$cap_huginn_database_username
+        HUGINN_DATABASE_NAME: $$cap_huginn_database_name
+        volumes:
+            - $$cap_appname-data:/var/lib/postgresql/data
     $$cap_appname-web:
         image: ghcr.io/huginn/huginn-single-process:$$cap_version-web
         restart: always
         ports:
             - 3001:3000
-        env_file:
-            - ../postgres.env
-            - ../secrets.env
+        environment:
+        POSTGRES_PORT_5432_TCP_ADDR: $$cap_postgres_port_5432_tcp_addr
+        POSTGRES_PASSWORD: $$cap_postgres_password
+        POSTGRES_USER: $$cap_postgres_user
+        HUGINN_DATABASE_PASSWORD: $$cap_huginn_database_password
+        HUGINN_DATABASE_USERNAME: $$cap_huginn_database_username
+        HUGINN_DATABASE_NAME: $$cap_huginn_database_name
+        APP_SECRET_TOKEN: $$cap_app_secret_token
         depends_on:
             - $$cap_appname-postgres
         caproverExtra:
@@ -26,19 +33,19 @@ services:
         image: ghcr.io/huginn/huginn-single-process:$$cap_version-threaded
         command: /scripts/init bin/threaded.rb
         restart: always
-        env_file:
-            - ../postgres.env
-            - ../secrets.env
+        environment:
+        POSTGRES_PORT_5432_TCP_ADDR: $$cap_postgres_port_5432_tcp_addr
+        POSTGRES_PASSWORD: $$cap_postgres_password
+        POSTGRES_USER: $$cap_postgres_user
+        HUGINN_DATABASE_PASSWORD: $$cap_huginn_database_password
+        HUGINN_DATABASE_USERNAME: $$cap_huginn_database_username
+        HUGINN_DATABASE_NAME: $$cap_huginn_database_name
+        APP_SECRET_TOKEN: $$cap_app_secret_token
         depends_on:
             - $$cap_appname-postgres
             - $$cap_appname-web
 caproverOneClickApp:
     variables:
-        - id: $$cap_version-postgresdata
-          label: The Postgres docker image version for the postgresdata service.
-          defaultValue: '9.5'
-          description: Check out their Docker page for the valid tags.
-          validRegex: /^([^\s^\/])+$/
         - id: $$cap_version-postgres
           label: The Postgres docker image version for the postgres service.
           defaultValue: '9.5'
@@ -46,14 +53,42 @@ caproverOneClickApp:
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_version-web
           label: The Huginn-single-process docker image version for the web service.
-          defaultValue: 'ac59e7ad8135cdfc962a8a5ec7cef137469a31ed'
-          description: 'Check out their Docker page for the valid tags: https://hub.docker.com/r/huginn/huginn-single-process/tags.'
+          defaultValue: ''
+          description: Check out their Docker page for the valid tags.
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_version-threaded
           label: The Huginn-single-process docker image version for the threaded service.
-          defaultValue: 'ac59e7ad8135cdfc962a8a5ec7cef137469a31ed'
-          description: 'Check out their Docker page for the valid tags: https://hub.docker.com/r/huginn/huginn-single-process/tags.'
+          defaultValue: ''
+          description: Check out their Docker page for the valid tags.
           validRegex: /^([^\s^\/])+$/
+        - id: $$cap_postgres_port_5432_tcp_addr
+          label: POSTGRES_PORT_5432_TCP_ADDR
+          defaultValue: postgres
+          description: Description needed
+        - id: $$cap_postgres_password
+          label: POSTGRES_PASSWORD
+          defaultValue: myhuginnpassword
+          description: Description needed
+        - id: $$cap_postgres_user
+          label: POSTGRES_USER
+          defaultValue: huginn
+          description: Description needed
+        - id: $$cap_huginn_database_password
+          label: HUGINN_DATABASE_PASSWORD
+          defaultValue: myhuginnpassword
+          description: Description needed
+        - id: $$cap_huginn_database_username
+          label: HUGINN_DATABASE_USERNAME
+          defaultValue: huginn
+          description: Description needed
+        - id: $$cap_huginn_database_name
+          label: HUGINN_DATABASE_NAME
+          defaultValue: huginn
+          description: Description needed
+        - id: $$cap_app_secret_token
+          label: APP_SECRET_TOKEN
+          defaultValue: xxxx
+          description: Description needed
     instructions:
         start: 'Create agents that monitor and act on your behalf. Your agents are standing by!'
         end: Huginn has been successfully deployed!
